@@ -114,12 +114,41 @@ public class Cryptography_Tool extends JFrame {
 	private JButton button_MACclear;
 	private JTextField textField_HmacTiger;
 	private JTabbedPane tabbedPane_1;
-	private JPanel panel_1;
+	private JPanel panel_AES;
 	private JPanel panel_2;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField textField_AES10M;
+	private JTextField textField_AES100M;
+	private JTextField textField_AES500M;
+	private JTextField textField_AES1G;
+	private JTextField textField_AEStime10M;
+	private JTextField textField_AEStime100M;
+	private JTextField textField_AEStime500M;
+	private JTextField textField_AEStime1G;
+	private JLabel label_12;
+	private JButton btn_TestAES;
+	private JLabel label_13;
+	private JRadioButton rdbtn_SHA1;
+	private JRadioButton rdbtn_SHA256;
+	private JRadioButton rdbtn_SHA384;
+	private JRadioButton rdbtn_SHA512;
+	private JLabel label_14;
+	private JLabel lblm_3;
+	private JTextField textField_HASH10M;
+	private JTextField textField_HASH100M;
+	private JLabel lblm_4;
+	private JTextField textField_HASH500M;
+	private JLabel lblg_1;
+	private JTextField textField_HASH1G;
+	private JButton btn_selectHash10M;
+	private JButton btn_selectHash100M;
+	private JButton btn_selectHash500M;
+	private JButton btn_selectHash1G;
+	private JTextField textField_timeHash10M;
+	private JTextField textField_timeHash100M;
+	private JTextField textField_timeHash500M;
+	private JTextField textField_timeHash1G;
+	private JLabel label_18;
+	private JButton btn_TestHash;
 
 	/**
 	 * Launch the application.
@@ -184,91 +213,173 @@ public class Cryptography_Tool extends JFrame {
 				textField_SHA_512.setText(null);
 				try {
 					byte msg[] = textField_message.getText().getBytes();
-					if (s.equals("Œƒº˛")) {
-						try {
-							FileInputStream fis=new FileInputStream(file);
-							Security.addProvider(new BouncyCastleProvider());
-							//œ˚œ¢’™“™÷µ - ÀÆ¡˜
-							MessageDigest md=MessageDigest.getInstance("SHA-256");
-							//œ˚œ¢’™“™ ‰»Î¡˜ - ◊∞¡ÀÀÆ±ÌµƒÀÆπ‹
-							DigestInputStream dis=new DigestInputStream(fis, md);
-							
-							
-							FileInputStream in = new FileInputStream(textField_message.getText());
-							byte[] buffer = new byte[4096];
-							while (in.read(buffer) != -1)
-								;
-							msg = buffer;
-							in.close();
-						} catch (FileNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					}
-					if (chckbx_MD5.isSelected()) {
+					if (chckbx_MD5.isSelected()) {	
 						md = MessageDigest.getInstance("MD5");
-						md.update(msg);
+						if (s.equals("Œƒº˛")) {
+							FileInputStream in = new FileInputStream(textField_message.getText());
+							DigestInputStream dis=new DigestInputStream(in, md);
+							byte[] buffer=new byte[4096];
+							while (dis.read(buffer)!=-1);   //øº ‘…æµÙ÷ÿ–¥
+							dis.close();
+							in.close();
+						}
+						else {
+							md.update(msg);
+						}
 						byte[] hashValue = md.digest();
 						textField_MD5.setText(Hex.toHexString(hashValue).toUpperCase());
 					}
 					if (chckbx_SHA1.isSelected()) {
 						md = MessageDigest.getInstance("SHA1");
-						md.update(msg);
+						if (s.equals("Œƒº˛")) {
+							FileInputStream in = new FileInputStream(textField_message.getText());
+							DigestInputStream dis=new DigestInputStream(in, md);
+							byte[] buffer=new byte[4096];
+							while (dis.read(buffer)!=-1);   //øº ‘…æµÙ÷ÿ–¥
+							dis.close();
+							in.close();
+						}
+						else {
+							md.update(msg);
+						}
 						byte[] hashValue = md.digest();
 						textField_SHA1.setText(Hex.toHexString(hashValue).toUpperCase());
 					}
 					if (chckbx_SHA_224.isSelected()) {
 						md = MessageDigest.getInstance("SHA-224");
-						md.update(msg);
+						if (s.equals("Œƒº˛")) {
+							FileInputStream in = new FileInputStream(textField_message.getText());
+							DigestInputStream dis=new DigestInputStream(in, md);
+							byte[] buffer=new byte[4096];
+							while (dis.read(buffer)!=-1);   //øº ‘…æµÙ÷ÿ–¥
+							dis.close();
+							in.close();
+						}
+						else {
+							md.update(msg);
+						}
 						byte[] hashValue = md.digest();
 						textField_SHA_224.setText(Hex.toHexString(hashValue).toUpperCase());
 					}
 					if (chckbx_SHA_256.isSelected()) {
 						md = MessageDigest.getInstance("SHA-256");
-						md.update(msg);
+						if (s.equals("Œƒº˛")) {
+							FileInputStream in = new FileInputStream(textField_message.getText());
+							DigestInputStream dis=new DigestInputStream(in, md);
+							byte[] buffer=new byte[4096];
+							while (dis.read(buffer)!=-1);   //øº ‘…æµÙ÷ÿ–¥
+							dis.close();
+							in.close();
+						}
+						else {
+							md.update(msg);
+						}
 						byte[] hashValue = md.digest();
 						textField_SHA_256.setText(Hex.toHexString(hashValue).toUpperCase());
 					}
 					if (chckbx_SHA_384.isSelected()) {
 						md = MessageDigest.getInstance("SHA-384");
-						md.update(msg);
+						if (s.equals("Œƒº˛")) {
+							FileInputStream in = new FileInputStream(textField_message.getText());
+							DigestInputStream dis=new DigestInputStream(in, md);
+							byte[] buffer=new byte[4096];
+							while (dis.read(buffer)!=-1);   //øº ‘…æµÙ÷ÿ–¥
+							dis.close();
+							in.close();
+						}
+						else {
+							md.update(msg);
+						}
 						byte[] hashValue = md.digest();
 						textField_SHA_384.setText(Hex.toHexString(hashValue).toUpperCase());
 					}
 					if (chckbx_SHA_512.isSelected()) {
 						md = MessageDigest.getInstance("SHA-512");
-						md.update(msg);
+						if (s.equals("Œƒº˛")) {
+							FileInputStream in = new FileInputStream(textField_message.getText());
+							DigestInputStream dis=new DigestInputStream(in, md);
+							byte[] buffer=new byte[4096];
+							while (dis.read(buffer)!=-1);   //øº ‘…æµÙ÷ÿ–¥
+							dis.close();
+							in.close();
+						}
+						else {
+							md.update(msg);
+						}
 						byte[] hashValue = md.digest();
 						textField_SHA_512.setText(Hex.toHexString(hashValue).toUpperCase());
 					}
 					if (chckbx_SHA3_224.isSelected()) {
 						md = MessageDigest.getInstance("SHA3-224");
-						md.update(msg);
+						if (s.equals("Œƒº˛")) {
+							FileInputStream in = new FileInputStream(textField_message.getText());
+							DigestInputStream dis=new DigestInputStream(in, md);
+							byte[] buffer=new byte[4096];
+							while (dis.read(buffer)!=-1);   //øº ‘…æµÙ÷ÿ–¥
+							dis.close();
+							in.close();
+						}
+						else {
+							md.update(msg);
+						}
 						byte[] hashValue = md.digest();
 						textField_SHA3_224.setText(Hex.toHexString(hashValue).toUpperCase());
 					}
 					if (chckbx_SHA3_256.isSelected()) {
 						md = MessageDigest.getInstance("SHA3-256");
-						md.update(msg);
+						if (s.equals("Œƒº˛")) {
+							FileInputStream in = new FileInputStream(textField_message.getText());
+							DigestInputStream dis=new DigestInputStream(in, md);
+							byte[] buffer=new byte[4096];
+							while (dis.read(buffer)!=-1);   //øº ‘…æµÙ÷ÿ–¥
+							dis.close();
+							in.close();
+						}
+						else {
+							md.update(msg);
+						}
 						byte[] hashValue = md.digest();
 						textField_SHA3_256.setText(Hex.toHexString(hashValue).toUpperCase());
 					}
 					if (chckbx_SHA3_384.isSelected()) {
 						md = MessageDigest.getInstance("SHA3-384");
-						md.update(msg);
+						if (s.equals("Œƒº˛")) {
+							FileInputStream in = new FileInputStream(textField_message.getText());
+							DigestInputStream dis=new DigestInputStream(in, md);
+							byte[] buffer=new byte[4096];
+							while (dis.read(buffer)!=-1);   //øº ‘…æµÙ÷ÿ–¥
+							dis.close();
+							in.close();
+						}
+						else {
+							md.update(msg);
+						}
 						byte[] hashValue = md.digest();
 						textField_SHA3_384.setText(Hex.toHexString(hashValue).toUpperCase());
 					}
 					if (chckbx_SHA3_512.isSelected()) {
 						md = MessageDigest.getInstance("SHA3-512");
-						md.update(msg);
+						if (s.equals("Œƒº˛")) {
+							FileInputStream in = new FileInputStream(textField_message.getText());
+							DigestInputStream dis=new DigestInputStream(in, md);
+							byte[] buffer=new byte[4096];
+							while (dis.read(buffer)!=-1);   //øº ‘…æµÙ÷ÿ–¥
+							dis.close();
+							in.close();
+						}
+						else {
+							md.update(msg);
+						}
 						byte[] hashValue = md.digest();
 						textField_SHA3_512.setText(Hex.toHexString(hashValue).toUpperCase());
 					}
 				} catch (NoSuchAlgorithmException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -1183,90 +1294,374 @@ public class Cryptography_Tool extends JFrame {
 		panel_Test.setLayout(null);
 
 		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_1.setBounds(0, 0, 538, 613);
+		tabbedPane_1.setBounds(0, 0, 549, 624);
 		panel_Test.add(tabbedPane_1);
 
-		panel_1 = new JPanel();
-		tabbedPane_1.addTab("AESÀ„∑®≤‚ ‘", null, panel_1, null);
-		panel_1.setLayout(null);
+		panel_AES = new JPanel();
+		tabbedPane_1.addTab("AESÀ„∑®≤‚ ‘", null, panel_AES, null);
+		panel_AES.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("\u9009\u62E9\u52A0\u5BC6\u5F3A\u5EA6\uFF08\u5BC6\u94A5\u957F\u5EA6\uFF09:");
 		lblNewLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
 		lblNewLabel.setBounds(14, 13, 249, 31);
-		panel_1.add(lblNewLabel);
+		panel_AES.add(lblNewLabel);
 
-		textField_1 = new JTextField();
-		textField_1.setBounds(14, 141, 272, 24);
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
+		textField_AES10M = new JTextField();
+		textField_AES10M.setEditable(false);
+		textField_AES10M.setBounds(14, 141, 272, 24);
+		panel_AES.add(textField_AES10M);
+		textField_AES10M.setColumns(10);
 
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(14, 222, 272, 24);
-		panel_1.add(textField_2);
+		textField_AES100M = new JTextField();
+		textField_AES100M.setEditable(false);
+		textField_AES100M.setColumns(10);
+		textField_AES100M.setBounds(14, 222, 272, 24);
+		panel_AES.add(textField_AES100M);
 
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(14, 303, 272, 24);
-		panel_1.add(textField_3);
+		textField_AES500M = new JTextField();
+		textField_AES500M.setEditable(false);
+		textField_AES500M.setColumns(10);
+		textField_AES500M.setBounds(14, 303, 272, 24);
+		panel_AES.add(textField_AES500M);
 
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("128");
-		rdbtnNewRadioButton.setBounds(33, 61, 64, 27);
-		panel_1.add(rdbtnNewRadioButton);
+		JRadioButton rdbtn_testAES128 = new JRadioButton("128");
+		rdbtn_testAES128.setBounds(33, 61, 64, 27);
+		panel_AES.add(rdbtn_testAES128);
 
-		JRadioButton radioButton = new JRadioButton("192");
-		radioButton.setBounds(155, 61, 64, 27);
-		panel_1.add(radioButton);
+		JRadioButton rdbtn_testAES192 = new JRadioButton("192");
+		rdbtn_testAES192.setBounds(155, 61, 64, 27);
+		panel_AES.add(rdbtn_testAES192);
 
-		JRadioButton radioButton_1 = new JRadioButton("256");
-		radioButton_1.setBounds(283, 61, 64, 27);
-		panel_1.add(radioButton_1);
-
+		JRadioButton rdbtn_testAES256 = new JRadioButton("256");
+		rdbtn_testAES256.setBounds(283, 61, 64, 27);
+		panel_AES.add(rdbtn_testAES256);
+		
+		ButtonGroup group2=new ButtonGroup();
+		group2.add(rdbtn_testAES128);
+		group2.add(rdbtn_testAES192);
+		group2.add(rdbtn_testAES256);
+		
 		JLabel lblm = new JLabel("\u8BF7\u9009\u62E9\u4E00\u4E2A\u5927\u5C0F\u4E3A10M\u5DE6\u53F3\u7684\u6587\u4EF6:");
 		lblm.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
 		lblm.setBounds(14, 97, 249, 31);
-		panel_1.add(lblm);
+		panel_AES.add(lblm);
 
 		JLabel lblm_1 = new JLabel(
 				"\u8BF7\u9009\u62E9\u4E00\u4E2A\u5927\u5C0F\u4E3A100M\u5DE6\u53F3\u7684\u6587\u4EF6:");
 		lblm_1.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
 		lblm_1.setBounds(14, 178, 249, 31);
-		panel_1.add(lblm_1);
+		panel_AES.add(lblm_1);
 
 		JLabel lblm_2 = new JLabel(
 				"\u8BF7\u9009\u62E9\u4E00\u4E2A\u5927\u5C0F\u4E3A500M\u5DE6\u53F3\u7684\u6587\u4EF6:");
 		lblm_2.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
 		lblm_2.setBounds(14, 259, 249, 31);
-		panel_1.add(lblm_2);
+		panel_AES.add(lblm_2);
 
-		JButton btnNewButton = new JButton("...");
-		btnNewButton.setBounds(300, 140, 23, 27);
-		panel_1.add(btnNewButton);
+		JButton btn_selectAES10M = new JButton("...");
+		btn_selectAES10M.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser("D:");
+				if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					textField_AES10M.setText(fileChooser.getSelectedFile().getPath());
+				}
+			}
+		});
+		btn_selectAES10M.setBounds(300, 140, 23, 27);
+		panel_AES.add(btn_selectAES10M);
 
-		JButton button = new JButton("...");
-		button.setBounds(300, 221, 23, 27);
-		panel_1.add(button);
+		JButton btn_selectAES100M = new JButton("...");
+		btn_selectAES100M.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser("D:");
+				if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					textField_AES100M.setText(fileChooser.getSelectedFile().getPath());
+				}
+			}
+		});
+		btn_selectAES100M.setBounds(300, 221, 23, 27);
+		panel_AES.add(btn_selectAES100M);
 
-		JButton button_1 = new JButton("...");
-		button_1.setBounds(300, 302, 23, 27);
-		panel_1.add(button_1);
+		JButton btn_selectAES500M = new JButton("...");
+		btn_selectAES500M.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser("D:");
+				if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					textField_AES500M.setText(fileChooser.getSelectedFile().getPath());
+				}
+			}
+		});
+		btn_selectAES500M.setBounds(300, 302, 23, 27);
+		panel_AES.add(btn_selectAES500M);
 
 		JLabel lblg = new JLabel("\u8BF7\u9009\u62E9\u4E00\u4E2A\u5927\u5C0F\u4E3A1G\u5DE6\u53F3\u7684\u6587\u4EF6:");
 		lblg.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
 		lblg.setBounds(14, 340, 249, 31);
-		panel_1.add(lblg);
+		panel_AES.add(lblg);
 
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(14, 384, 272, 24);
-		panel_1.add(textField_4);
+		textField_AES1G = new JTextField();
+		textField_AES1G.setEditable(false);
+		textField_AES1G.setColumns(10);
+		textField_AES1G.setBounds(14, 384, 272, 24);
+		panel_AES.add(textField_AES1G);
 
-		JButton button_2 = new JButton("...");
-		button_2.setBounds(300, 383, 23, 27);
-		panel_1.add(button_2);
+		JButton btn_selectAES1G = new JButton("...");
+		btn_selectAES1G.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser("D:");
+				if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					textField_AES1G.setText(fileChooser.getSelectedFile().getPath());
+				}
+			}
+		});
+		btn_selectAES1G.setBounds(300, 383, 23, 27);
+		panel_AES.add(btn_selectAES1G);
+		
+		textField_AEStime10M = new JTextField();
+		textField_AEStime10M.setEditable(false);
+		textField_AEStime10M.setBounds(368, 141, 112, 24);
+		panel_AES.add(textField_AEStime10M);
+		textField_AEStime10M.setColumns(10);
+		
+		textField_AEStime100M = new JTextField();
+		textField_AEStime100M.setEditable(false);
+		textField_AEStime100M.setColumns(10);
+		textField_AEStime100M.setBounds(368, 222, 112, 24);
+		panel_AES.add(textField_AEStime100M);
+		
+		textField_AEStime500M = new JTextField();
+		textField_AEStime500M.setEditable(false);
+		textField_AEStime500M.setColumns(10);
+		textField_AEStime500M.setBounds(368, 303, 112, 24);
+		panel_AES.add(textField_AEStime500M);
+		
+		textField_AEStime1G = new JTextField();
+		textField_AEStime1G.setEditable(false);
+		textField_AEStime1G.setColumns(10);
+		textField_AEStime1G.setBounds(368, 384, 112, 24);
+		panel_AES.add(textField_AEStime1G);
+		
+		label_12 = new JLabel("\u52A0\u5BC6\u65F6\u95F4\uFF1A");
+		label_12.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
+		label_12.setBounds(350, 97, 112, 31);
+		panel_AES.add(label_12);
+		
+		btn_TestAES = new JButton("\u6267\u884C\u52A0\u5BC6");
+		btn_TestAES.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String getAESlength = null;
+				if (rdbtn_testAES128.isSelected()) {
+					getAESlength=rdbtn_testAES128.getText();
+				}
+				if (rdbtn_testAES192.isSelected()) {
+					getAESlength=rdbtn_testAES192.getText();
+				}
+				if (rdbtn_testAES256.isSelected()) {
+					getAESlength=rdbtn_testAES256.getText();
+				}
+				try {
+					long timeAES10M=TestTime.TestTimebyAES(textField_AES10M.getText(), textField_AES10M.getText()+".enc", getAESlength);
+					long timeAES100M=TestTime.TestTimebyAES(textField_AES100M.getText(), textField_AES100M.getText()+".enc", getAESlength);
+					long timeAES500M=TestTime.TestTimebyAES(textField_AES500M.getText(), textField_AES500M.getText()+".enc", getAESlength);
+					long timeAES1G=TestTime.TestTimebyAES(textField_AES1G.getText(), textField_AES1G.getText()+".enc", getAESlength);
+					textField_AEStime10M.setText(String.valueOf(timeAES10M));
+					textField_AEStime100M.setText(String.valueOf(timeAES100M));
+					textField_AEStime500M.setText(String.valueOf(timeAES500M));
+					textField_AEStime1G.setText(String.valueOf(timeAES1G));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		btn_TestAES.setBounds(190, 476, 113, 27);
+		panel_AES.add(btn_TestAES);
 
 		panel_2 = new JPanel();
 		tabbedPane_1.addTab("HASHÀ„∑®≤‚ ‘", null, panel_2, null);
+		panel_2.setLayout(null);
+		
+		label_13 = new JLabel("\u9009\u62E9\u7B97\u6CD5\u957F\u5EA6:");
+		label_13.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
+		label_13.setBounds(14, 13, 249, 31);
+		panel_2.add(label_13);
+		
+		rdbtn_SHA1 = new JRadioButton("SHA1");
+		rdbtn_SHA1.setBounds(24, 53, 87, 27);
+		panel_2.add(rdbtn_SHA1);
+		
+		rdbtn_SHA256 = new JRadioButton("SHA-256");
+		rdbtn_SHA256.setBounds(117, 53, 87, 27);
+		panel_2.add(rdbtn_SHA256);
+		
+		rdbtn_SHA384 = new JRadioButton("SHA-384");
+		rdbtn_SHA384.setBounds(210, 53, 87, 27);
+		panel_2.add(rdbtn_SHA384);
+		
+		rdbtn_SHA512 = new JRadioButton("SHA-512");
+		rdbtn_SHA512.setBounds(303, 53, 87, 27);
+		panel_2.add(rdbtn_SHA512);
+		
+		ButtonGroup group3=new ButtonGroup();
+		group3.add(rdbtn_SHA1);
+		group3.add(rdbtn_SHA256);
+		group3.add(rdbtn_SHA384);
+		group3.add(rdbtn_SHA512);
+		
+		label_14 = new JLabel("\u8BF7\u9009\u62E9\u4E00\u4E2A\u5927\u5C0F\u4E3A10M\u5DE6\u53F3\u7684\u6587\u4EF6:");
+		label_14.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
+		label_14.setBounds(14, 103, 249, 31);
+		panel_2.add(label_14);
+		
+		lblm_3 = new JLabel("\u8BF7\u9009\u62E9\u4E00\u4E2A\u5927\u5C0F\u4E3A100M\u5DE6\u53F3\u7684\u6587\u4EF6:");
+		lblm_3.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
+		lblm_3.setBounds(14, 184, 249, 31);
+		panel_2.add(lblm_3);
+		
+		textField_HASH10M = new JTextField();
+		textField_HASH10M.setEditable(false);
+		textField_HASH10M.setColumns(10);
+		textField_HASH10M.setBounds(14, 147, 272, 24);
+		panel_2.add(textField_HASH10M);
+		
+		textField_HASH100M = new JTextField();
+		textField_HASH100M.setEditable(false);
+		textField_HASH100M.setColumns(10);
+		textField_HASH100M.setBounds(14, 228, 272, 24);
+		panel_2.add(textField_HASH100M);
+		
+		lblm_4 = new JLabel("\u8BF7\u9009\u62E9\u4E00\u4E2A\u5927\u5C0F\u4E3A500M\u5DE6\u53F3\u7684\u6587\u4EF6:");
+		lblm_4.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
+		lblm_4.setBounds(14, 265, 249, 31);
+		panel_2.add(lblm_4);
+		
+		textField_HASH500M = new JTextField();
+		textField_HASH500M.setEditable(false);
+		textField_HASH500M.setColumns(10);
+		textField_HASH500M.setBounds(14, 309, 272, 24);
+		panel_2.add(textField_HASH500M);
+		
+		lblg_1 = new JLabel("\u8BF7\u9009\u62E9\u4E00\u4E2A\u5927\u5C0F\u4E3A1G\u5DE6\u53F3\u7684\u6587\u4EF6:");
+		lblg_1.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
+		lblg_1.setBounds(14, 346, 249, 31);
+		panel_2.add(lblg_1);
+		
+		textField_HASH1G = new JTextField();
+		textField_HASH1G.setEditable(false);
+		textField_HASH1G.setColumns(10);
+		textField_HASH1G.setBounds(14, 392, 272, 24);
+		panel_2.add(textField_HASH1G);
+		
+		btn_selectHash10M = new JButton(",,.");
+		btn_selectHash10M.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser("D:");
+				if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					textField_HASH10M.setText(fileChooser.getSelectedFile().getPath());
+				}
+			}
+		});
+		btn_selectHash10M.setBounds(299, 146, 26, 27);
+		panel_2.add(btn_selectHash10M);
+		
+		btn_selectHash100M = new JButton(",,.");
+		btn_selectHash100M.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser("D:");
+				if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					textField_HASH100M.setText(fileChooser.getSelectedFile().getPath());
+				}
+			}
+		});
+		btn_selectHash100M.setBounds(299, 227, 26, 27);
+		panel_2.add(btn_selectHash100M);
+		
+		btn_selectHash500M = new JButton(",,.");
+		btn_selectHash500M.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser("D:");
+				if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					textField_HASH500M.setText(fileChooser.getSelectedFile().getPath());
+				}
+			}
+		});
+		btn_selectHash500M.setBounds(299, 308, 26, 27);
+		panel_2.add(btn_selectHash500M);
+		
+		btn_selectHash1G = new JButton(",,.");
+		btn_selectHash1G.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser("D:");
+				if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					textField_HASH1G.setText(fileChooser.getSelectedFile().getPath());
+				}
+			}
+		});
+		btn_selectHash1G.setBounds(299, 391, 26, 27);
+		panel_2.add(btn_selectHash1G);
+		
+		textField_timeHash10M = new JTextField();
+		textField_timeHash10M.setEditable(false);
+		textField_timeHash10M.setColumns(10);
+		textField_timeHash10M.setBounds(366, 147, 112, 24);
+		panel_2.add(textField_timeHash10M);
+		
+		textField_timeHash100M = new JTextField();
+		textField_timeHash100M.setEditable(false);
+		textField_timeHash100M.setColumns(10);
+		textField_timeHash100M.setBounds(366, 228, 112, 24);
+		panel_2.add(textField_timeHash100M);
+		
+		textField_timeHash500M = new JTextField();
+		textField_timeHash500M.setEditable(false);
+		textField_timeHash500M.setColumns(10);
+		textField_timeHash500M.setBounds(366, 309, 112, 24);
+		panel_2.add(textField_timeHash500M);
+		
+		textField_timeHash1G = new JTextField();
+		textField_timeHash1G.setEditable(false);
+		textField_timeHash1G.setColumns(10);
+		textField_timeHash1G.setBounds(366, 392, 112, 24);
+		panel_2.add(textField_timeHash1G);
+		
+		label_18 = new JLabel("\u8BA1\u7B97\u65F6\u95F4:");
+		label_18.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.PLAIN, 15));
+		label_18.setBounds(331, 103, 147, 31);
+		panel_2.add(label_18);
+		
+		btn_TestHash = new JButton("\u6267\u884C\u8BA1\u7B97");
+		btn_TestHash.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String getAlgorithms = null;
+				if (rdbtn_SHA1.isSelected()) {
+					getAlgorithms=rdbtn_SHA1.getText();
+				}
+				if (rdbtn_SHA256.isSelected()) {
+					getAlgorithms=rdbtn_SHA256.getText();
+				}
+				if (rdbtn_SHA384.isSelected()) {
+					getAlgorithms=rdbtn_SHA384.getText();
+				}
+				if (rdbtn_SHA512.isSelected()) {
+					getAlgorithms=rdbtn_SHA512.getText();
+				}
+				try {
+					long timeHASH10M=TestTime.TestTimebyHash(textField_HASH10M.getText(), getAlgorithms);
+					long timeHASH100M=TestTime.TestTimebyHash(textField_HASH100M.getText(),getAlgorithms);
+					long timeHASH500M=TestTime.TestTimebyHash(textField_HASH500M.getText(),getAlgorithms);
+					long timeHASH1G=TestTime.TestTimebyHash(textField_HASH1G.getText(),getAlgorithms);
+					textField_timeHash10M.setText(String.valueOf(timeHASH10M));
+					textField_timeHash100M.setText(String.valueOf(timeHASH100M));
+					textField_timeHash500M.setText(String.valueOf(timeHASH500M));
+					textField_timeHash1G.setText(String.valueOf(timeHASH1G));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		btn_TestHash.setBounds(184, 483, 113, 27);
+		panel_2.add(btn_TestHash);
 
 	}
 }
