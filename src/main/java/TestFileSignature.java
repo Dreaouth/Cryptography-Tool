@@ -56,17 +56,17 @@ public class TestFileSignature {
 	}
 	
 	//验证签名时从keystore文件中获取数字证书，从而获取公钥，然后验证签名。
-	public static boolean verifiFile(String filetoVerify,String signValueFile,String getpassword) {
+	public static boolean verifiFile(String filetoVerify,String signValueFile,String vertifyKeystore,String getpassword) {
 		{
 			try {
 				FileInputStream fis1=new FileInputStream(filetoVerify);
 				FileInputStream fis2=new FileInputStream(signValueFile);
 				// 创建KeyStore对象，并从密钥库文件中读入内容
 				KeyStore keyStore = KeyStore.getInstance("JCEKS");
-				char[] password = getpassword.toCharArray();
-				FileInputStream fis = new FileInputStream("mynewkeys.keystore");
-				// 把密钥库文件中内容加载到keystore对象中
+				FileInputStream fis = new FileInputStream(vertifyKeystore);
+				char[] password=getpassword.toCharArray();
 				keyStore.load(fis, password);
+				// 把密钥库文件中内容加载到keystore对象中
 				// 读取密钥对myrsakey中的公钥对应的自签名证书
 				X509Certificate certificate = (X509Certificate) keyStore.getCertificate("myrsakey");
 				// 从数字证书中获取RSA公钥，并打印其内容（证书中只有公钥，没有私钥）
@@ -80,7 +80,6 @@ public class TestFileSignature {
 				while ((n = fis1.read(buffer)) != -1) {
 					signature.update(buffer, 0, n);
 				}
-				fis.close();
 				fis1.close();
 				fis2.close();
 				return signature.verify(signValue);
@@ -97,15 +96,16 @@ public class TestFileSignature {
 			} catch (NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (CertificateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (SignatureException e) {
+				JOptionPane.showMessageDialog(null, "验证失败,文件类型不符！");
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				JOptionPane.showMessageDialog(null, "验证失败（或密码错误）！");
+				e.printStackTrace();
+			} catch (CertificateException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

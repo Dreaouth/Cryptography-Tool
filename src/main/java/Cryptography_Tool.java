@@ -68,10 +68,6 @@ public class Cryptography_Tool extends JFrame {
 	private JButton button_encrypt;
 	private JTextField textField_choosefile_decrypt;
 	private JButton button_choosefile_decrypt;
-	private JLabel label_2;
-	private JRadioButton rdbtn_decrypt128;
-	private JRadioButton rdbtn_decrypt192;
-	private JRadioButton rdbtn_decrypt256;
 	private JRadioButton rdbtn_encrypt128;
 	private JRadioButton rdbtn_encrypt192;
 	private JRadioButton rdbtn_encrypt256;
@@ -86,7 +82,6 @@ public class Cryptography_Tool extends JFrame {
 	private JTextField textField_Select_signValue;
 	private JPasswordField passwordField_passwordsign;
 	private JPasswordField passwordField_passwordsign2;
-	private JPasswordField passwordField_verify;
 	private JLabel label_11;
 	private JTextField textField_inputorSelectMAC;
 	private JCheckBox chckbx_HmacMD5;
@@ -149,6 +144,10 @@ public class Cryptography_Tool extends JFrame {
 	private JTextField textField_timeHash1G;
 	private JLabel label_18;
 	private JButton btn_TestHash;
+	private JTextField textField_MACkey;
+	private JTextField textField_Select_vertify_keystore;
+	private JLabel label_10;
+	private JPasswordField passwordField_keystore;
 
 	/**
 	 * Launch the application.
@@ -666,7 +665,7 @@ public class Cryptography_Tool extends JFrame {
 
 		JLabel label = new JLabel("\u5BC6\u7801:");
 		label.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-		label.setBounds(14, 484, 80, 26);
+		label.setBounds(14, 439, 80, 26);
 		panel_fileDE.add(label);
 
 		JButton button_decry = new JButton("\u89E3\u5BC6");
@@ -676,25 +675,15 @@ public class Cryptography_Tool extends JFrame {
 				String after_decryfilename = textField_choosefile_decrypt.getText() + ".txt";
 				char[] password_char = passwordField_decrypt.getPassword();
 				String password = new String(password_char);
-				int decrypt_length = 0;
-				if (rdbtn_decrypt128.isSelected()) {
-					decrypt_length = Integer.parseInt(rdbtn_decrypt128.getText());
-				}
-				if (rdbtn_decrypt192.isSelected()) {
-					decrypt_length = Integer.parseInt(rdbtn_decrypt192.getText());
-				}
-				if (rdbtn_decrypt256.isSelected()) {
-					decrypt_length = Integer.parseInt(rdbtn_decrypt256.getText());
-				}
 				try {
-					MyFileEncryptor.decryptFile(decryfilename, after_decryfilename, password, decrypt_length);
+					MyFileEncryptor.decryptFile(decryfilename, after_decryfilename, password);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
-		button_decry.setBounds(198, 548, 80, 27);
+		button_decry.setBounds(198, 527, 80, 27);
 		panel_fileDE.add(button_decry);
 
 		JLabel label_1 = new JLabel("\u8BF7\u9009\u62E9\u52A0\u5BC6\u957F\u5EA6:");
@@ -718,27 +707,7 @@ public class Cryptography_Tool extends JFrame {
 		group.add(rdbtn_encrypt192);
 		group.add(rdbtn_encrypt256);
 
-		label_2 = new JLabel("\u8BF7\u9009\u62E9\u52A0\u5BC6\u957F\u5EA6:");
-		label_2.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-		label_2.setBounds(10, 413, 217, 26);
-		panel_fileDE.add(label_2);
-
-		rdbtn_decrypt128 = new JRadioButton("128");
-		rdbtn_decrypt128.setBounds(14, 448, 80, 27);
-		panel_fileDE.add(rdbtn_decrypt128);
-
-		rdbtn_decrypt192 = new JRadioButton("192");
-		rdbtn_decrypt192.setBounds(105, 448, 89, 27);
-		panel_fileDE.add(rdbtn_decrypt192);
-
-		rdbtn_decrypt256 = new JRadioButton("256");
-		rdbtn_decrypt256.setBounds(205, 448, 89, 27);
-		panel_fileDE.add(rdbtn_decrypt256);
-
 		ButtonGroup buttonGroup = new ButtonGroup();
-		buttonGroup.add(rdbtn_decrypt128);
-		buttonGroup.add(rdbtn_decrypt192);
-		buttonGroup.add(rdbtn_decrypt256);
 		label_3 = new JLabel("\uFF08\u8BF7\u8F93\u5165\u957F\u5EA6\u4E3A6-16\u4F4D\u7684\u5BC6\u7801\uFF09");
 		label_3.setFont(new Font("宋体", Font.PLAIN, 15));
 		label_3.setBounds(246, 232, 217, 26);
@@ -753,7 +722,7 @@ public class Cryptography_Tool extends JFrame {
 		panel_fileDE.add(passwordField_encrypt2);
 
 		passwordField_decrypt = new JPasswordField();
-		passwordField_decrypt.setBounds(108, 485, 288, 24);
+		passwordField_decrypt.setBounds(108, 441, 288, 24);
 		panel_fileDE.add(passwordField_decrypt);
 
 		JPanel panel_fileSign = new JPanel();
@@ -846,12 +815,12 @@ public class Cryptography_Tool extends JFrame {
 		textField_Select_signValue = new JTextField();
 		textField_Select_signValue.setEditable(false);
 		textField_Select_signValue.setColumns(10);
-		textField_Select_signValue.setBounds(29, 396, 427, 24);
+		textField_Select_signValue.setBounds(29, 383, 427, 24);
 		panel_fileSign.add(textField_Select_signValue);
 
 		JLabel label_9 = new JLabel("\uFF08\u9009\u62E9\u50A8\u5B58\u7B7E\u540D\u503C\u7684\u6587\u4EF6\uFF09");
 		label_9.setFont(new Font("宋体", Font.PLAIN, 13));
-		label_9.setBounds(309, 426, 215, 26);
+		label_9.setBounds(309, 409, 215, 26);
 		panel_fileSign.add(label_9);
 
 		JButton button_select_verify1 = new JButton("...");
@@ -875,23 +844,18 @@ public class Cryptography_Tool extends JFrame {
 				}
 			}
 		});
-		button_select_verify2.setBounds(470, 395, 25, 27);
+		button_select_verify2.setBounds(470, 382, 25, 27);
 		panel_fileSign.add(button_select_verify2);
-
-		JLabel label_10 = new JLabel("\u8F93\u5165\u5BC6\u7801:");
-		label_10.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-		label_10.setBounds(19, 472, 77, 26);
-		panel_fileSign.add(label_10);
 
 		JButton button_verify = new JButton("\u7B7E\u540D\u9A8C\u8BC1");
 		button_verify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String verifyFile = textField_select_verify.getText();
+				String vertifyFile = textField_select_verify.getText();
 				String signValueFile = textField_Select_signValue.getText();
-				char[] password0 = passwordField_verify.getPassword();
-				String password = new String(password0);
+				String vertifyKeystore=textField_Select_vertify_keystore.getText();
+				String password=new String(passwordField_keystore.getPassword());
 				try {
-					boolean judge = TestFileSignature.verifiFile(verifyFile, signValueFile, password);
+					boolean judge = TestFileSignature.verifiFile(vertifyFile, signValueFile,vertifyKeystore,password);
 					if (judge) {
 						JOptionPane.showMessageDialog(null, "验证成功！");
 					}
@@ -901,7 +865,7 @@ public class Cryptography_Tool extends JFrame {
 				}
 			}
 		});
-		button_verify.setBounds(177, 543, 113, 27);
+		button_verify.setBounds(177, 553, 113, 27);
 		panel_fileSign.add(button_verify);
 
 		passwordField_passwordsign = new JPasswordField();
@@ -912,14 +876,42 @@ public class Cryptography_Tool extends JFrame {
 		passwordField_passwordsign2.setBounds(122, 175, 322, 24);
 		panel_fileSign.add(passwordField_passwordsign2);
 
-		passwordField_verify = new JPasswordField();
-		passwordField_verify.setBounds(122, 473, 322, 24);
-		panel_fileSign.add(passwordField_verify);
-
 		label_11 = new JLabel("\uFF08\u8BF7\u8F93\u5165\u957F\u5EA6\u4E3A6-16\u4F4D\u7684\u5BC6\u7801\uFF09");
 		label_11.setFont(new Font("宋体", Font.PLAIN, 13));
 		label_11.setBounds(309, 204, 217, 26);
 		panel_fileSign.add(label_11);
+		
+		textField_Select_vertify_keystore = new JTextField();
+		textField_Select_vertify_keystore.setEditable(false);
+		textField_Select_vertify_keystore.setColumns(10);
+		textField_Select_vertify_keystore.setBounds(31, 437, 427, 24);
+		panel_fileSign.add(textField_Select_vertify_keystore);
+		
+		label_10 = new JLabel("\uFF08\u9009\u62E9\u5BC6\u94A5\u5E93\u6587\u4EF6\uFF09");
+		label_10.setFont(new Font("宋体", Font.PLAIN, 13));
+		label_10.setBounds(309, 463, 215, 26);
+		panel_fileSign.add(label_10);
+		
+		JButton button_selectVerify_keystore = new JButton("...");
+		button_selectVerify_keystore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser("C:/Users/liu/workspace/密码学综合工具");
+				if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					textField_Select_vertify_keystore.setText(fileChooser.getSelectedFile().getPath());
+				}
+			}
+		});
+		button_selectVerify_keystore.setBounds(473, 435, 25, 27);
+		panel_fileSign.add(button_selectVerify_keystore);
+		
+		passwordField_keystore = new JPasswordField();
+		passwordField_keystore.setBounds(122, 491, 322, 24);
+		panel_fileSign.add(passwordField_keystore);
+		
+		JLabel label_15 = new JLabel("\u5BC6\u94A5\u5E93\u53E3\u4EE4:");
+		label_15.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+		label_15.setBounds(19, 494, 99, 18);
+		panel_fileSign.add(label_15);
 
 		JPanel panel_MAC = new JPanel();
 		tabbedPane.addTab("消息认证码", null, panel_MAC, null);
@@ -934,6 +926,7 @@ public class Cryptography_Tool extends JFrame {
 		textField_inputorSelectMAC.setColumns(10);
 
 		JButton btn_selectMAC = new JButton("...");
+		btn_selectMAC.setVisible(false);
 		btn_selectMAC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser("D:");
@@ -1097,153 +1090,236 @@ public class Cryptography_Tool extends JFrame {
 				textField_HmacSHA384.setText("");
 				textField_HmacSHA512.setText("");
 				textField_HmacTiger.setText("");
-				byte msg[] = textField_inputorSelectMAC.getText().getBytes();
-				if (MACs.equals("文件")) {
-					try {
-						FileInputStream in = new FileInputStream(textField_inputorSelectMAC.getText());
-						byte[] buffer = new byte[4096];
-						while (in.read(buffer) != -1)
-							;
-						msg = buffer;
-						in.close();
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
+				String msg = textField_inputorSelectMAC.getText();
 				if (chckbx_HmacTiger.isSelected()) {
-					try {
-						byte[] key = MACCoder.initHmacTigerKey();
-						textField_HmacTiger.setText(MACCoder.encodeHmacTiger(key, msg));
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					String key=textField_MACkey.getText();
+					if (MACs.equals("文件")) {
+						try {
+							textField_HmacTiger.setText(MACCoder.encodeHmacTigerFile(msg,key));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else {
+						try {
+							textField_HmacTiger.setText(MACCoder.encodeHmacTiger(msg,key));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}						
 					}
 				}
 				if (chckbx_HmacMD5.isSelected()) {
+					String key=textField_MACkey.getText();
 					try {
-						byte[] key = MACCoder.initHmacMD5Key();
-						textField_HmacMD5.setText(MACCoder.encodeHmacMD5(key, msg));
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						if (MACs.equals("文件")) {
+							textField_HmacMD5.setText(MACCoder.encodeHmacMD5File(msg, key));
+						}
+						else {
+							textField_HmacMD5.setText(MACCoder.encodeHmacMD5(msg,key));						
+						}
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 				if (chckbx_HmacSHA1.isSelected()) {
-					try {
-						byte[] key = MACCoder.initHmacSHAKey();
-						textField_HmacSHA1.setText(MACCoder.encodeHmacSHA(key, msg));
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					String key=textField_MACkey.getText();
+					if (MACs.equals("文件")) {
+						try {
+							textField_HmacSHA1.setText(MACCoder.encodeHmacSHAFile(msg, key));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else {
+						try {
+							textField_HmacSHA1.setText(MACCoder.encodeHmacSHA(msg,key));
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}						
 					}
 				}
 				if (chckbx_HmacSHA256.isSelected()) {
-					try {
-						byte[] key = MACCoder.initHmacSHA256Key();
-						textField_HmacSHA256.setText(MACCoder.encodeHmacSHA256(key, msg));
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					String key=textField_MACkey.getText();
+					if (MACs.equals("文件")) {
+						try {
+							textField_HmacSHA256.setText(MACCoder.encodeHmacSHA256File(msg, key));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else {
+						try {
+							textField_HmacSHA256.setText(MACCoder.encodeHmacSHA256(msg,key));
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}						
 					}
 				}
 				if (chckbx_HmacSHA384.isSelected()) {
-					try {
-						byte[] key = MACCoder.initHmacSHA384Key();
-						textField_HmacSHA384.setText(MACCoder.encodeHmacSHA384(key, msg));
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					String key=textField_MACkey.getText();
+					if (MACs.equals("文件")) {
+						try {
+							textField_HmacSHA384.setText(MACCoder.encodeHmacSHA384File(msg, key));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else {
+						try {
+							textField_HmacSHA384.setText(MACCoder.encodeHmacSHA384(msg,key));
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}						
 					}
 				}
 				if (chckbx_HmacSHA512.isSelected()) {
-					try {
-						byte[] key = MACCoder.initHmacSHA512Key();
-						textField_HmacSHA512.setText(MACCoder.encodeHmacSHA512(key, msg));
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					String key=textField_MACkey.getText();
+					if (MACs.equals("文件")) {
+						try {
+							textField_HmacSHA512.setText(MACCoder.encodeHmacSHA512File(msg, key));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else {
+						try {
+							textField_HmacSHA512.setText(MACCoder.encodeHmacSHA512(msg,key));
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}					
 					}
 				}
 				if (chckbx_HmacMD2.isSelected()) {
-					try {
-						byte[] key = MACCoder.initHmacMD2Key();
-						textField_HmacMD2.setText(MACCoder.encodeHmacMD2(key, msg));
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					String key=textField_MACkey.getText();
+					if (MACs.equals("文件")) {
+						try {
+							textField_HmacMD2.setText(MACCoder.encodeHmacMD2File(msg, key));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else {
+						try {
+							textField_HmacMD2.setText(MACCoder.encodeHmacMD2(msg,key));
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}					
 					}
 				}
 				if (chckbx_HmacMD4.isSelected()) {
-					try {
-						byte[] key = MACCoder.initHmacMD4Key();
-						textField_HmacMD4.setText(MACCoder.encodeHmacMD4(key, msg));
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					String key=textField_MACkey.getText();
+					if (MACs.equals("文件")) {
+						try {
+							textField_HmacMD4.setText(MACCoder.encodeHmacMD4File(msg, key));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else {
+						try {
+							textField_HmacMD4.setText(MACCoder.encodeHmacMD4(msg,key));
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}					
 					}
 				}
 				if (chckbx_HmacRipeMD128.isSelected()) {
-					try {
-						byte[] key = MACCoder.initHmacRipeMD128Key();
-						textField_HmacRipeMD128.setText(MACCoder.encodeHmacRipeMD128(key, msg));
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					String key=textField_MACkey.getText();
+					if (MACs.equals("文件")) {
+						try {
+							textField_HmacRipeMD128.setText(MACCoder.encodeHmacRipeMD128File(msg, key));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else {
+						try {
+							textField_HmacRipeMD128.setText(MACCoder.encodeHmacRipeMD128(msg,key));
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}				
 					}
 				}
 				if (chckbx_HmacRipeMD160.isSelected()) {
-					try {
-						byte[] key = MACCoder.initHmacRipeMD160Key();
-						textField_HmacRipeMD160.setText(MACCoder.encodeHmacRipeMD160(key, msg));
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					String key=textField_MACkey.getText();
+					if (MACs.equals("文件")) {
+						try {
+							textField_HmacRipeMD160.setText(MACCoder.encodeHmacRipeMD160File(msg,key));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else {
+						try {
+							textField_HmacRipeMD160.setText(MACCoder.encodeHmacRipeMD160(msg,key));
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}				
 					}
 				}
 				if (chckbx_HmacSHA224.isSelected()) {
-					try {
-						byte[] key = MACCoder.initHmacSHA224Key();
-						textField_HmacSHA224.setText(MACCoder.encodeHmacSHA224(key, msg));
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					String key=textField_MACkey.getText();
+					if (MACs.equals("文件")) {
+						try {
+							textField_HmacSHA224.setText(MACCoder.encodeHmacSHA224File(msg,key));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else {
+						try {
+							textField_HmacSHA224.setText(MACCoder.encodeHmacSHA224(msg,key));
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}				
 					}
 				}
 			}
@@ -1288,6 +1364,16 @@ public class Cryptography_Tool extends JFrame {
 		textField_HmacTiger.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textField_HmacTiger.setBounds(150, 519, 355, 24);
 		panel_MAC.add(textField_HmacTiger);
+		
+		JLabel lblkey = new JLabel("\u8BF7\u8F93\u5165key:");
+		lblkey.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		lblkey.setBounds(40, 94, 95, 24);
+		panel_MAC.add(lblkey);
+		
+		textField_MACkey = new JTextField();
+		textField_MACkey.setBounds(148, 95, 332, 24);
+		panel_MAC.add(textField_MACkey);
+		textField_MACkey.setColumns(10);
 
 		JPanel panel_Test = new JPanel();
 		tabbedPane.addTab("性能测试", null, panel_Test, null);

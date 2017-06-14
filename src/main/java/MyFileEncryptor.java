@@ -7,6 +7,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Security;
 import java.util.Random;
 
 import javax.crypto.Cipher;
@@ -16,17 +17,19 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JOptionPane;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 public class MyFileEncryptor {
-//	public static void main(String[] args) throws Exception {
-//		String fileName = "C:\\Users\\Administrator\\workspace\\Test\\src\\MyFileEncryptor.java";
-//		String encryptedFileName = "C:\\Users\\Administrator\\workspace\\Test\\src\\MyFileEncryptor.java.enc";
-//		String password = "123456";
-//		enryptFile(fileName, encryptedFileName, password);
-//
-//		String decryptedFileName = "C:\\Users\\Administrator\\workspace\\Test\\src\\MyFileEncryptor1.java";
-//		decryptFile(encryptedFileName, decryptedFileName, password);
-//
-//	}
+	public static void main(String[] args) throws Exception {
+		Security.addProvider(new BouncyCastleProvider());
+		String fileName = "D:/√‹¬Î—ßº”√‹≤‚ ‘”√/aaa.txt";
+		String encryptedFileName = fileName+".enc";
+		String password = "123456";
+		enryptFile(fileName, encryptedFileName, password,128);
+		String decryptedFileName = encryptedFileName+".txt";
+		decryptFile(encryptedFileName, decryptedFileName, password);
+
+	}
 
 	public static void enryptFile(String fileName, String encryptedFileName, String password,int length) throws Exception {
 		FileInputStream fis = new FileInputStream(fileName);
@@ -46,6 +49,7 @@ public class MyFileEncryptor {
 
 		CipherInputStream cis = new CipherInputStream(fis, cipher);
 		fos.write("MyFileEncryptor".getBytes());
+		fos.write(String.valueOf(length).getBytes());
 		fos.write(ivValue);
 
 		byte[] buffer = new byte[64];
@@ -58,15 +62,17 @@ public class MyFileEncryptor {
 		fos.close();
 	}
 
-	public static void decryptFile(String encryptedFileName, String decryptedFileName, String password,int length)
+	public static void decryptFile(String encryptedFileName, String decryptedFileName, String password)
 			{
 		try {
 			FileInputStream fis = new FileInputStream(encryptedFileName);
-
+			byte[] getlength=new byte[3];
+			int length;
 			byte[] fileIdentifier = new byte[15];
 			if (fis.read(fileIdentifier) == 15 && new String(fileIdentifier).equals("MyFileEncryptor")) {
 				FileOutputStream fos = new FileOutputStream(decryptedFileName);
-
+				fis.read(getlength);
+				length=Integer.parseInt(new String(getlength));
 				String keylength="SHA3-"+length*2;
 				System.out.println(keylength);
 				MessageDigest md = MessageDigest.getInstance(keylength);
