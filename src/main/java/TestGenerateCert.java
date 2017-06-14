@@ -69,8 +69,8 @@ public class TestGenerateCert {
 		FileOutputStream fos = new FileOutputStream("mynewkeys.keystore");
 		keyStore.store(fos, passWord);
 	}
-	public static void main(String[] args) throws Exception {
-		TestGenerateCert.geterateKey("123456");
-	}
+//	public static void main(String[] args) throws Exception {
+//		TestGenerateCert.geterateKey("123456");
+//	}
 }
 

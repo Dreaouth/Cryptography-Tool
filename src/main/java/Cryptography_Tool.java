@@ -2,6 +2,7 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -61,8 +62,6 @@ public class Cryptography_Tool extends JFrame {
 	private JCheckBox chckbx_SHA3_256;
 	private JCheckBox chckbx_SHA3_384;
 	private JCheckBox chckbx_SHA3_512;
-	private JPanel panel;
-	private JTextField textField;
 	private JTextField textField_choosefile_encry;
 	private JButton btn_choosefile_encry;
 	private JButton button_encrypt;
@@ -171,6 +170,9 @@ public class Cryptography_Tool extends JFrame {
 	 * Create the frame.
 	 */
 	public Cryptography_Tool() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				"D:\\\u5218\u4FCA\\Android\\900\u591A\u4E2Aandroid\u5F00\u53D1\u5C0F\u56FE\u6807\u7D20\u6750\uFF0C\u5F88\u591A\u7CBE\u7F8E\u5C0F\u56FE\u6807\u6536\u96C6\\th_Calculator-1.png"));
+		setTitle("密码学综合工具");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 571, 702);
 		contentPane = new JPanel();
